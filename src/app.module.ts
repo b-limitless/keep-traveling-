@@ -24,7 +24,9 @@ import { Car } from './cars/car.entity';
           entities: [User, Car]
         }
       }
-    })
+    }),
+    UsersModule,
+    CarsModule
   ],
   controllers: [AppController],
   providers: [AppService],

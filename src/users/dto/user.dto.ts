@@ -1,8 +1,11 @@
-import { IsBoolean, IsEmail, IsString } from 'class-validator';
+import { Expose } from 'class-transformer';
 export class UserDto {
-  @IsEmail()
+  @Expose()
+  id: number;
+
+  @Expose()
   email: string;
 
-  @IsBoolean()
+  @Expose()
   admin?: boolean = false
 }

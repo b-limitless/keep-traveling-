@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "../users/user.entity";
 import { CreateCarDto } from "./dto/create-car.dto";
+import { SearchCarDto } from "./dto/search-car.dto";
 
 @Injectable()
 export class CarService {
@@ -17,8 +18,13 @@ export class CarService {
         return this.repo.save(car);
     }
 
-    search() {
-
+    search({make, model}:SearchCarDto) {
+        return this.repo.createQueryBuilder()
+        .select('*')
+        .where('make= :make', {make})
+        .orWhere('model= :model', {model})
+        .limit(20)
+        .getRawMany();
     }
 
     filter() {

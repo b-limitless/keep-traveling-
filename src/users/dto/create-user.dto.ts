@@ -7,5 +7,5 @@ export class CreateUserDto {
   password: string;
 
   @IsBoolean()
-  admin: boolean
+  admin?: boolean = false
 }

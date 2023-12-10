@@ -3,6 +3,8 @@ import { AuthService } from './auth.service';
 import { UsersService } from './users.service';
 import { Post, Body, Session } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
+import { CurrentUser } from './decorators/current-user.decorator';
+import { User } from './user.entity';
 
 @Controller('users')
 export class UsersController {
@@ -27,4 +29,11 @@ export class UsersController {
   signOut(@Session() session: any) {
     session.userId = null;
   }
+
+  @Post('/currentUser')
+  currentUser(@CurrentUser() user: User) {
+    return user;
+  }
+
+  
 }

@@ -8,6 +8,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/user.entity';
 import { Car } from './cars/car.entity';
 import { APP_PIPE } from '@nestjs/core';
+import { ReservationsModule } from './reservations/reservations.module';
 
 const cookieSession = require('cookie-session');
 
@@ -31,6 +32,7 @@ const cookieSession = require('cookie-session');
     }),
     UsersModule,
     CarsModule,
+    ReservationsModule,
   ],
   controllers: [AppController],
   providers: [

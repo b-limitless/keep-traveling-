@@ -1,11 +1,7 @@
 import {
-  AfterInsert,
-  AfterRemove,
-  AfterUpdate,
-  Column,
-  Entity,
-  OneToMany,
-  PrimaryGeneratedColumn,
+    Column,
+    Entity,
+    PrimaryGeneratedColumn
 } from 'typeorm';
 
 @Entity()

@@ -1,5 +1,11 @@
-import { IsLatitude, IsLongitude } from 'class-validator';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    ManyToOne,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+} from 'typeorm';
 import { User } from '../users/user.entity';
 @Entity()
 export class Car {
@@ -22,8 +28,16 @@ export class Car {
   mileage: number;
 
   @ManyToOne(() => User, (user) => user.cars)
-  user: User
+  user: User;
 
-  @Column({ default: false })
-  approved: boolean;
+  @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
+
+  @UpdateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
+  })
+  updatedAt: Date;
 }
+

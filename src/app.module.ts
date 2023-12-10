@@ -48,7 +48,7 @@ export class AppModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(
       cookieSession({
-        key: ['APP_SECRET_KEY']
+        keys: ['APP_SECRET_KEY']
       })
     ).forRoutes('*')
   }

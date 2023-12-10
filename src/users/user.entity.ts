@@ -1,8 +1,11 @@
 import {
     Column,
     Entity,
-    PrimaryGeneratedColumn
+    PrimaryGeneratedColumn, 
+    OneToMany
 } from 'typeorm';
+
+import { Car } from 'src/cars/car.entity';
 
 @Entity()
 export class User {
@@ -17,4 +20,8 @@ export class User {
 
   @Column({ default: false })
   admin: boolean;
+
+  @OneToMany(() => Car, (car) => car.user)
+  cars: Car[]
 }
+

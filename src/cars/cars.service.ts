@@ -2,6 +2,8 @@ import { Injectable } from "@nestjs/common";
 import { Car } from "./car.entity";
 import { Repository } from 'typeorm';
 import { InjectRepository } from "@nestjs/typeorm";
+import { User } from "../users/user.entity";
+import { CreateCarDto } from "./dto/create-car.dto";
 
 @Injectable()
 export class CarService {
@@ -9,8 +11,10 @@ export class CarService {
         this.repo = repo;
     }
 
-    create() {
-
+    create(carDto: CreateCarDto, user:User) {
+        const car = this.repo.create(carDto);
+        car.user = user;
+        return this.repo.save(car);
     }
 
     search() {
@@ -18,6 +22,6 @@ export class CarService {
     }
 
     filter() {
-        
+
     }
 }

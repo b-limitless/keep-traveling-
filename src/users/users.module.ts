@@ -4,6 +4,7 @@ import { UsersService } from './users.service';
 import { AuthService } from './auth.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user.entity';
+import { CurrentUserMiddleware } from './middlewares/current-user.middleware';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User])],
@@ -12,6 +13,6 @@ import { User } from './user.entity';
 })
 export class UsersModule {
   configure(consumer: MiddlewareConsumer) {
-    // Will add current user middleware
+    consumer.apply(CurrentUserMiddleware).forRoutes('*')
   }
 }

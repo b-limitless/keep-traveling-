@@ -8,6 +8,7 @@ export class ReservationService {
     constructor(@InjectRepository(Reservation) private repo: Repository<Reservation>) {}
 
     async create(reservationDto: CreateReservationDto, user: User) {
+        // Before we create the reservation we need to check its availability 
         const reserve =  this.repo.create(reservationDto);
 
         reserve.user = user; 

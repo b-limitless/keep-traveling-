@@ -72,4 +72,12 @@ export class CarService {
 
     return queryBuilder.limit(20).getRawMany();
   }
+
+  findOne(id:number) {
+    if(!id) {
+      return null;
+    }
+
+    return this.repo.findOneBy({id});
+  }
 }

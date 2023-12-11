@@ -1,14 +1,18 @@
 import { Controller, NotFoundException, UseGuards } from '@nestjs/common';
 import { Post, Body } from '@nestjs/common';
 import { CreateReservationDto } from './dto/create-reservation.dto';
-import { CurrentUser } from 'src/users/decorators/current-user.decorator';
-import { User } from 'src/users/user.entity';
+import { CurrentUser } from '../users/decorators/current-user.decorator';
+import { User } from '../users/user.entity';
 import { ReservationService } from './reservations.service';
-import { AuthGuard } from 'src/guard/auth.guard';
-import { CarService } from 'src/cars/cars.service';
-import { UsersService } from 'src/users/users.service';
+import { AuthGuard } from '../guard/auth.guard';
+import { CarService } from '../cars/cars.service';
+import { UsersService } from '../users/users.service';
+import { Serialize } from '../users/interceptors/serialize.interceptors';
+import { ReservationDto } from './dto/reservation.dto';
+import { CancelReservationDto } from './dto/cancel-reservation.dto';
 
 @Controller('reservations')
+@Serialize(ReservationDto)
 export class ReservationsController {
     constructor(
          private reservationService: ReservationService, 
@@ -17,16 +21,28 @@ export class ReservationsController {
          ) {}
     @Post('/')
     @UseGuards(AuthGuard)
-    createReservation(@CurrentUser() user: User, @Body() body: CreateReservationDto) {
+    async createReservation(@CurrentUser() user: User, @Body() body: CreateReservationDto) {
         // Check if  car exists with the id
         const {carId} = body;
-        const carExists = this.carService.findOne(Number(carId));
+        const car = await this.carService.findOne(Number(carId));
 
-        if(!carExists) {
+        if(!car) {
             return new NotFoundException('car not found');
         }
         
-        return this.reservationService.create(body, user);
+        return this.reservationService.create(body, user, car);
+    }
+
+    async cancelReservation(@CurrentUser() user: User, @Body() body: CancelReservationDto) {
+        const {id} = body; 
+
+        const reservationExists = await this.reservationService.findOne(Number(id));
+
+        if(!reservationExists) {
+            throw new NotFoundException('reservation not found');
+        }
+
+        
     }
 
 }

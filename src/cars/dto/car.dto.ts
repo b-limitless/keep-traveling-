@@ -28,4 +28,10 @@ export class CarDto {
 
   @Expose()
   updatedAt: Date;
+
+  @Expose()
+  availableFrom: Date;
+
+  @Expose()
+  availableTo: Date;
 }

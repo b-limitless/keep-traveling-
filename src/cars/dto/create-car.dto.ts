@@ -1,13 +1,11 @@
+import { Transform } from 'class-transformer';
 import {
   IsDate,
-    IsNumber,
-    IsString,
-    Max,
-    Min,
-    Validate
+  IsNumber,
+  IsString,
+  Max,
+  Min
 } from 'class-validator';
-import { IsFutureDateConstraint } from '../mis/is-future-date-contraint';
-import { Transform } from 'class-transformer';
   
   export class CreateCarDto {
     @Min(1)

@@ -30,9 +30,9 @@ export class User {
   @UpdateDateColumn({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
   updatedAt: Date;
 
-  @OneToMany(() => Car, (car) => car.user, {cascade: true})
+  @OneToMany(() => Car, (car) => car.user, {cascade: true, eager: false})
   cars: Car[];
 
-  @OneToMany(() => Reservation, (reservations) => reservations.user, {cascade: true})
+  @OneToMany(() => Reservation, (reservations) => reservations.user, {cascade: true, eager: false})
   reservations: Reservation[]
 }

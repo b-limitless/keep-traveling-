@@ -19,6 +19,10 @@ export class CarService {
     return this.repo.save(car);
   }
 
+  async find() {
+    return this.repo.find();
+  }
+
   search({ make, model }: SearchCarDto) {
     return this.repo
       .createQueryBuilder()

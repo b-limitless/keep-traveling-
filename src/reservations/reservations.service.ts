@@ -12,7 +12,6 @@ export class ReservationService {
   ) {}
 
   async create(reservationDto: CreateReservationDto, user: User, car: Car) {
-    // Before we create the reservation we need to check its availability
     const reserve = this.repo.create(reservationDto);
 
     reserve.user = user;
@@ -20,8 +19,6 @@ export class ReservationService {
 
     return this.repo.save(reserve);
   }
-
-  delete(reservationId: number) {}
 
   findOne(id: number) {
     if (!id) {

@@ -1,4 +1,11 @@
-import { BadRequestException, Controller, Delete, NotFoundException, Param, UseGuards } from '@nestjs/common';
+import {
+  BadRequestException,
+  Controller,
+  Delete,
+  NotFoundException,
+  Param,
+  UseGuards,
+} from '@nestjs/common';
 import { Post, Body } from '@nestjs/common';
 import { CreateReservationDto } from './dto/create-reservation.dto';
 import { CurrentUser } from '../users/decorators/current-user.decorator';
@@ -14,41 +21,48 @@ import { CancelReservationDto } from './dto/cancel-reservation.dto';
 @Controller('reservations')
 @Serialize(ReservationDto)
 export class ReservationsController {
-    constructor(
-         private reservationService: ReservationService, 
-         private carService: CarService,
-         private userServie: UsersService
-         ) {}
-    @Post('/')
-    @UseGuards(AuthGuard)
-    async createReservation(@CurrentUser() user: User, @Body() body: CreateReservationDto) {
-        // Check if  car exists with the id
-        const {carId} = body;
-        const car = await this.carService.findOne(Number(carId));
+  constructor(
+    private reservationService: ReservationService,
+    private carService: CarService,
+    private userServie: UsersService,
+  ) {}
+  @Post('/')
+  @UseGuards(AuthGuard)
+  async createReservation(
+    @CurrentUser() user: User,
+    @Body() body: CreateReservationDto,
+  ) {
+    // Check if  car exists with the id
+    const { carId } = body;
+    const car = await this.carService.findOne(Number(carId));
 
-        if(!car) {
-            return new NotFoundException('car not found');
-        }
-        
-        return this.reservationService.create(body, user, car);
+    if (!car) {
+      return new NotFoundException('car not found');
     }
 
-    @Delete('/:id')
-    async cancelReservation(@CurrentUser() user: User,  @Param() params: CancelReservationDto) {
-        const {id} = params; 
+    return this.reservationService.create(body, user, car);
+  }
 
-        const reservationExists = await this.reservationService.findOne(Number(id));
+  @Delete('/:id')
+  async cancelReservation(
+    @CurrentUser() user: User,
+    @Param() params: CancelReservationDto,
+  ) {
+    const { id } = params;
 
-        if(!reservationExists) {
-            throw new NotFoundException('reservation not found');
-        }
-        const remove = await this.reservationService.cacnelReservation(Number(id));
-        
-        if(!remove) {
-            throw new BadRequestException('reservation cannot be canceled in the first 24 hours it was made');
-        }
+    const reservationExists = await this.reservationService.findOne(Number(id));
 
-        return true;
+    if (!reservationExists) {
+      throw new NotFoundException('reservation not found');
+    }
+    const remove = await this.reservationService.cacnelReservation(Number(id));
+
+    if (!remove) {
+      throw new BadRequestException(
+        'reservation cannot be canceled in the first 24 hours it was made',
+      );
     }
 
+    return true;
+  }
 }

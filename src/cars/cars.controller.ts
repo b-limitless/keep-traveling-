@@ -19,6 +19,11 @@ export class CarsController {
         return await this.carService.create(car, currentUser);
     }
 
+    @Get('/')
+    async listCars() {
+        return await this.carService.find()
+    }
+
     @Get('/search')
     async searchCars(@Query() query: SearchCarDto) {
         const {make, model} = query;

@@ -1,4 +1,6 @@
-import { Expose, Transform } from 'class-transformer';
+import { Expose, Transform, Type } from 'class-transformer';
+import { ReservationDto } from 'src/reservations/dto/reservation.dto';
+import { Reservation } from 'src/reservations/reservation.entity';
 
 export class CarDto {
   @Expose()
@@ -34,4 +36,8 @@ export class CarDto {
 
   @Expose()
   availableTo: Date;
+
+  @Expose()
+  @Type(() => ReservationDto)
+  reservations: Reservation[]
 }

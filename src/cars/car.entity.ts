@@ -35,10 +35,10 @@ export class Car {
   @Column({type: 'datetime', nullable: true})
   availableTo: Date
 
-  @ManyToOne(() => User, (user) => user.cars)
+  @ManyToOne(() => User, (user) => user.cars, {onDelete: 'SET NULL'})
   user: User;
 
-  @OneToMany(() => Reservation, (reservation) => reservation.car, {cascade: true})
+  @OneToMany(() => Reservation, (reservation) => reservation.car, {cascade: true, eager: true})
   reservations: Reservation[]
 
   @CreateDateColumn({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })

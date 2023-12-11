@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 
 import { Car } from 'src/cars/car.entity';
+import { Reservation } from 'src/reservations/reservation.entity';
 
 @Entity()
 export class User {
@@ -29,6 +30,9 @@ export class User {
   @UpdateDateColumn({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
   updatedAt: Date;
 
-  @OneToMany(() => Car, (car) => car.user)
+  @OneToMany(() => Car, (car) => car.user, {cascade: true})
   cars: Car[];
+
+  @OneToMany(() => Reservation, (reservations) => reservations.user, {cascade: true})
+  reservations: Reservation[]
 }

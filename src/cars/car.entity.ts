@@ -5,6 +5,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
+  OneToMany
 } from 'typeorm';
 import { User } from '../users/user.entity';
 import { Reservation } from 'src/reservations/reservation.entity';
@@ -31,8 +32,8 @@ export class Car {
   @ManyToOne(() => User, (user) => user.cars)
   user: User;
 
-  @ManyToOne(() => Reservation, (reservation) => reservation.car)
-  reservations: Reservation
+  @OneToMany(() => Reservation, (reservation) => reservation.car, {cascade: true})
+  reservations: Reservation[]
 
   @CreateDateColumn({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;

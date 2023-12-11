@@ -9,6 +9,7 @@ import { User } from './users/user.entity';
 import { Car } from './cars/car.entity';
 import { APP_PIPE } from '@nestjs/core';
 import { ReservationsModule } from './reservations/reservations.module';
+import { Reservation } from './reservations/reservation.entity';
 
 const cookieSession = require('cookie-session');
 
@@ -25,7 +26,7 @@ const cookieSession = require('cookie-session');
         return {
           type: 'sqlite',
           database: config.get<string>('DB_NAME'),
-          entities: [User, Car],
+          entities: [User, Car, Reservation],
           synchronize: true,
         };
       },

@@ -7,6 +7,7 @@ import {
     Validate
 } from 'class-validator';
 import { IsFutureDateConstraint } from '../mis/is-future-date-contraint';
+import { Transform } from 'class-transformer';
   
   export class CreateCarDto {
     @Min(1)
@@ -29,12 +30,14 @@ import { IsFutureDateConstraint } from '../mis/is-future-date-contraint';
     @Max(1000000)
     mileage: number;
 
+    @Transform(({value}) => new Date(value))
     @IsDate()
-    @Validate(IsFutureDateConstraint)
+    // @Validate(IsFutureDateConstraint)
     availableFrom: Date;
 
+    @Transform(({value}) => new Date(value))
     @IsDate()
-    @Validate(IsFutureDateConstraint)
+    // @Validate(IsFutureDateConstraint)
     availableTo: Date;
   }
   

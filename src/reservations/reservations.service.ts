@@ -7,7 +7,12 @@ import { CreateReservationDto } from './dto/create-reservation.dto';
 export class ReservationService {
     constructor(@InjectRepository(Reservation) private repo: Repository<Reservation>) {}
 
-    create(reservationDto: CreateReservationDto, user: User) {
+    async create(reservationDto: CreateReservationDto, user: User) {
+        const reserve =  this.repo.create(reservationDto);
+
+        reserve.user = user; 
+
+        return this.repo.save(reserve);
 
     }
 

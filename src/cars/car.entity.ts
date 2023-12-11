@@ -29,6 +29,12 @@ export class Car {
   @Column()
   mileage: number;
 
+  @Column()
+  availableFrom: Date
+
+  @Column()
+  availableTo: Date
+
   @ManyToOne(() => User, (user) => user.cars)
   user: User;
 

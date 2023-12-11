@@ -1,48 +1,48 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Reservation } from './reservation.entity';
-import {Repository} from 'typeorm';
+import { Repository } from 'typeorm';
 import { User } from '../users/user.entity';
 import { CreateReservationDto } from './dto/create-reservation.dto';
 import { Car } from '../cars/car.entity';
 import { minimumReservationCancellationHours } from 'src/config/reservation';
 
 export class ReservationService {
-    constructor(@InjectRepository(Reservation) private repo: Repository<Reservation>) {}
+  constructor(
+    @InjectRepository(Reservation) private repo: Repository<Reservation>,
+  ) {}
 
-    async create(reservationDto: CreateReservationDto, user: User, car: Car) {
-        // Before we create the reservation we need to check its availability 
-        const reserve =  this.repo.create(reservationDto);
+  async create(reservationDto: CreateReservationDto, user: User, car: Car) {
+    // Before we create the reservation we need to check its availability
+    const reserve = this.repo.create(reservationDto);
 
-        reserve.user = user; 
-        reserve.car = car;
+    reserve.user = user;
+    reserve.car = car;
 
-        return this.repo.save(reserve);
+    return this.repo.save(reserve);
+  }
 
+  delete(reservationId: number) {}
+
+  findOne(id: number) {
+    if (!id) {
+      return null;
     }
+    return this.repo.findOneBy({ id });
+  }
 
-    delete(reservationId: number) {
+  async cacnelReservation(id: number) {
+    const currentDate = new Date();
 
-    }
+    currentDate.setHours(
+      currentDate.getHours() - minimumReservationCancellationHours,
+    );
 
-    findOne(id:number) {
-        if(!id) {
-            return null;
-        }
-        return this.repo.findOneBy({id});
-    }
-
-    async cacnelReservation(id: number) {
-        const currentDate = new Date();
-
-        currentDate.setHours(currentDate.getHours() - minimumReservationCancellationHours);
-        
-        const deleteReservation =  await this.repo.createQueryBuilder()
-            .delete()
-            .where('createAt < currentDate', {currentDate})
-            .andWhere('id= :id', {id})
-            .execute();
-        return deleteReservation.affected;
-    }
-
-
+    const deleteReservation = await this.repo
+      .createQueryBuilder()
+      .delete()
+      .where('createdAt < :currentDate', { currentDate })
+      .andWhere('id= :id', { id })
+      .execute();
+    return deleteReservation.affected;
+  }
 }

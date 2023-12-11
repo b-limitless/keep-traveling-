@@ -42,8 +42,9 @@ export class ReservationsController {
         if(!reservationExists) {
             throw new NotFoundException('reservation not found');
         }
-
-        if(!this.reservationService.cacnelReservation(Number(id))) {
+        const remove = await this.reservationService.cacnelReservation(Number(id));
+        
+        if(!remove) {
             throw new BadRequestException('reservation cannot be canceled in the first 24 hours it was made');
         }
 

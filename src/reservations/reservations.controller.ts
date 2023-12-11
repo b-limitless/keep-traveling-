@@ -1,4 +1,4 @@
-import { Controller, NotFoundException, UseGuards } from '@nestjs/common';
+import { BadRequestException, Controller, Delete, NotFoundException, Param, UseGuards } from '@nestjs/common';
 import { Post, Body } from '@nestjs/common';
 import { CreateReservationDto } from './dto/create-reservation.dto';
 import { CurrentUser } from '../users/decorators/current-user.decorator';
@@ -33,8 +33,9 @@ export class ReservationsController {
         return this.reservationService.create(body, user, car);
     }
 
-    async cancelReservation(@CurrentUser() user: User, @Body() body: CancelReservationDto) {
-        const {id} = body; 
+    @Delete('/:id')
+    async cancelReservation(@CurrentUser() user: User,  @Param() params: CancelReservationDto) {
+        const {id} = params; 
 
         const reservationExists = await this.reservationService.findOne(Number(id));
 
@@ -42,7 +43,11 @@ export class ReservationsController {
             throw new NotFoundException('reservation not found');
         }
 
-        
+        if(!this.reservationService.cacnelReservation(Number(id))) {
+            throw new BadRequestException('reservation cannot be canceled in the first 24 hours it was made');
+        }
+
+        return true;
     }
 
 }

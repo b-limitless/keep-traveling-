@@ -31,15 +31,17 @@ export class ReservationService {
         return this.repo.findOneBy({id});
     }
 
-    cacnelReservation(id: number) {
+    async cacnelReservation(id: number) {
         const currentDate = new Date();
 
         currentDate.setHours(currentDate.getHours() - minimumReservationCancellationHours);
         
-        return this.repo.createQueryBuilder()
+        const deleteReservation =  await this.repo.createQueryBuilder()
+            .delete()
             .where('createAt < currentDate', {currentDate})
             .andWhere('id= :id', {id})
-            .getOne();
+            .execute();
+        return deleteReservation.affected;
     }
 
 

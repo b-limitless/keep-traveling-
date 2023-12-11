@@ -9,6 +9,7 @@ import { Serialize } from 'src/users/interceptors/serialize.interceptors';
 import { CarDto } from './dto/car.dto';
 import { SearchCarDto } from './dto/search-car.dto';
 import { FilterCarDto } from './dto/filter-car.dto';
+import { UserDto } from 'src/users/dto/user.dto';
 @Controller('cars')
 export class CarsController {
     constructor(private carService:CarService) {};
@@ -20,6 +21,7 @@ export class CarsController {
     }
 
     @Get('/')
+    @Serialize(CarDto)
     async listCars() {
         return await this.carService.find()
     }
@@ -31,6 +33,7 @@ export class CarsController {
     }
 
     @Get('/filter') 
+    
     async filterCars(@Query() query: FilterCarDto) {
         return this.carService.filter(query)
     }

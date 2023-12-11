@@ -42,4 +42,8 @@ export class ReservationService {
       .execute();
     return deleteReservation.affected;
   }
+
+  async findAll() {
+    return this.repo.find();
+  }
 }

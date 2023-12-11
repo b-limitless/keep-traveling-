@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Controller,
   Delete,
+  Get,
   NotFoundException,
   Param,
   UseGuards,
@@ -43,6 +44,12 @@ export class ReservationsController {
     return this.reservationService.create(body, user, car);
   }
 
+  @Get('/')
+  async findAllReservation() {
+    // Only for the testing 
+    return this.reservationService.findAll();
+  }
+
   @Delete('/:id')
   async cancelReservation(
     @CurrentUser() user: User,
@@ -65,4 +72,6 @@ export class ReservationsController {
 
     return true;
   }
+
+
 }

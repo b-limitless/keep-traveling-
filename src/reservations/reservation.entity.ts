@@ -23,7 +23,7 @@ export class Reservation {
   @ManyToOne(() => Car, (car) => car.reservations)
   car: Car;
 
-  @ManyToOne(() => User, (user) => user.reservations)
+  @ManyToOne(() => User, (user) => user.reservations, {eager: true})
   user: User;
 
   @CreateDateColumn({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })

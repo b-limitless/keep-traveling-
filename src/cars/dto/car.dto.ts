@@ -21,7 +21,7 @@ export class CarDto {
   @Expose()
   mileage: string;
 
-  @Transform(({obj}) => obj.user.id)
+  @Transform(({obj}) => obj?.user?.id)
   @Expose()
   userId: number;
 

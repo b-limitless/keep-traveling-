@@ -1,19 +1,24 @@
+import { User } from 'src/users/user.entity';
 import {
-  Column,
-  Entity,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  CreateDateColumn,
-  UpdateDateColumn,
-  ManyToOne,
+    CreateDateColumn,
+    Entity,
+    ManyToOne,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn, 
+    Column
 } from 'typeorm';
 import { Car } from '../cars/car.entity';
-import { User } from 'src/users/user.entity';
 
 @Entity()
 export class Reservation {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column({type: 'datetime'})
+  start: Date
+
+  @Column({type: 'datetime'})
+  end: Date
 
   @ManyToOne(() => Car, (car) => car.reservations)
   car: Car;

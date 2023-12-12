@@ -41,6 +41,12 @@ export class ReservationsController {
       return new NotFoundException('car not found');
     }
 
+    const validateOverLapping = await this.reservationService.isReservationIsOverLapping(body);
+    
+    if(validateOverLapping) {
+      throw new BadRequestException('Can not make reservation. Car is not avaialble');
+    }
+
     return this.reservationService.create(body, user, car);
   }
 

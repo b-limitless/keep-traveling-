@@ -6,6 +6,7 @@ import { CreateReservationDto } from './dto/create-reservation.dto';
 import { Car } from '../cars/car.entity';
 import { minimumReservationCancellationHours } from 'src/config/reservation';
 
+
 export class ReservationService {
   constructor(
     @InjectRepository(Reservation) private repo: Repository<Reservation>,
@@ -18,6 +19,19 @@ export class ReservationService {
     reserve.car = car;
 
     return this.repo.save(reserve);
+  }
+
+  async isReservationIsOverLapping(reservationDto: CreateReservationDto) {
+    const { carId, start, end } = reservationDto;
+
+    const overlappingReservation = await this.repo.createQueryBuilder()
+      .where('reservation.carId = :carId', { carId })
+      .andWhere('(reservation.start < :end AND reservation.end > :start)', { start, end })
+      .getOne();
+
+    console.log('overlappingReservation', overlappingReservation)
+
+    return !!overlappingReservation;
   }
 
   findOne(id: number) {

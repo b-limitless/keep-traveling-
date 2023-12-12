@@ -42,8 +42,8 @@ export class CarService {
     maxYear,
     minMileage,
     maxMileage,
-    startDate, 
-    endDate
+    startDate,
+    endDate,
   }: FilterCarDto) {
     const queryBuilder = this.repo.createQueryBuilder('car');
 
@@ -95,13 +95,15 @@ export class CarService {
         'car.availableTo',
       ]); // Select car attributes
 
-
-      if (startDate && endDate) {
-        queryBuilder.andWhere('(reservation.start >= :endDate OR reservation.end <= :startDate)', {
+    if (startDate && endDate) {
+      queryBuilder.andWhere(
+        '(reservation.start >= :endDate OR reservation.end <= :startDate)',
+        {
           startDate,
           endDate,
-        });
-      }
+        },
+      );
+    }
 
     const res = await queryBuilder.limit(20).getMany();
 

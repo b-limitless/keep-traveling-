@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { IsOptional, IsString, IsNumber, IsPositive } from 'class-validator';
+import { IsOptional, IsString, IsNumber, IsPositive, IsDate } from 'class-validator';
 
 export class FilterCarDto {
   @IsOptional()
@@ -45,4 +45,16 @@ export class FilterCarDto {
   @IsNumber()
   @IsPositive()
   maxMileage?: number;
+
+  @Transform(({value}) => new Date(value))
+  @IsOptional()
+  @IsDate()
+  startDate: Date
+
+
+  @Transform(({value}) => new Date(value))
+  @IsOptional()
+  @IsDate()
+  endDate: Date
+
 }

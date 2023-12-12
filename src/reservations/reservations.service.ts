@@ -5,6 +5,7 @@ import { User } from '../users/user.entity';
 import { CreateReservationDto } from './dto/create-reservation.dto';
 import { Car } from '../cars/car.entity';
 import { minimumReservationCancellationHours } from 'src/config/reservation';
+import { limitRecord } from '../config/app';
 
 
 export class ReservationService {
@@ -58,6 +59,6 @@ export class ReservationService {
   }
 
   async findAll() {
-    return this.repo.find();
+    return this.repo.find({take: limitRecord});
   }
 }

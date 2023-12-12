@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
+import { limitRecord } from '../config/app';
 
 @Injectable()
 export class UsersService {
@@ -27,6 +28,6 @@ export class UsersService {
     }
 
    async findAll() {
-        return await this.repo.find();
+        return await this.repo.find({take: limitRecord});
     }
 }

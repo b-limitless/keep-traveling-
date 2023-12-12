@@ -6,6 +6,7 @@ import { User } from '../users/user.entity';
 import { CreateCarDto } from './dto/create-car.dto';
 import { SearchCarDto } from './dto/search-car.dto';
 import { FilterCarDto } from './dto/filter-car.dto';
+import { limitRecord } from '../config/app';
 
 @Injectable()
 export class CarService {
@@ -20,7 +21,7 @@ export class CarService {
   }
 
   async find() {
-    return this.repo.find();
+    return this.repo.find({take: limitRecord});
   }
 
   search({ make, model }: SearchCarDto) {
@@ -29,7 +30,7 @@ export class CarService {
       .select('*')
       .where('make= :make', { make })
       .orWhere('model= :model', { model })
-      .limit(20)
+      .limit(limitRecord)
       .getRawMany();
   }
 
@@ -93,7 +94,7 @@ export class CarService {
         'car.updatedAt',
         'car.availableFrom',
         'car.availableTo',
-      ]); // Select car attributes
+      ]); 
 
     if (startDate && endDate) {
       queryBuilder.andWhere(
@@ -105,9 +106,9 @@ export class CarService {
       );
     }
 
-    const res = await queryBuilder.limit(20).getMany();
+    const res = await queryBuilder.limit(limitRecord).getMany();
 
-    console.log('res', JSON.stringify(res, null, 2));
+    // console.log('res', JSON.stringify(res, null, 2));
 
     return res;
   }

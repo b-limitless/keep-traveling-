@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
 import { CreateCarDto } from './dto/create-car.dto';
 import { Body } from '@nestjs/common';
 import { AdminGuard } from '../guard/admin.guard';
@@ -10,6 +10,8 @@ import { CarDto } from './dto/car.dto';
 import { SearchCarDto } from './dto/search-car.dto';
 import { FilterCarDto } from './dto/filter-car.dto';
 import { UserDto } from 'src/users/dto/user.dto';
+import {CarAvailabilityParamDto } from './dto/car-availability-param.dto';
+import { CarAvailabilityQueryDto } from './dto/car-availability-query.dto';
 @Controller('cars')
 export class CarsController {
     constructor(private carService:CarService) {};
@@ -36,5 +38,13 @@ export class CarsController {
     @Serialize(CarDto)
     async filterCars(@Query() query: FilterCarDto) {
         return this.carService.filter(query)
+    }
+
+    @Get('/availability/:carId')
+    async checkCarAvailability(
+            @Param() param: CarAvailabilityParamDto, 
+            @Query() query: CarAvailabilityQueryDto
+            ) {
+        return this.carService.checkAvailability(param, query);
     }
 }

@@ -8,7 +8,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { User } from '../users/user.entity';
-import { Reservation } from 'src/reservations/reservation.entity';
+import { Reservation } from '../reservations/reservation.entity';
 @Entity()
 export class Car {
   @PrimaryGeneratedColumn()

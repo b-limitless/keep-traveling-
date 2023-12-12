@@ -7,6 +7,8 @@ import { CreateCarDto } from './dto/create-car.dto';
 import { SearchCarDto } from './dto/search-car.dto';
 import { FilterCarDto } from './dto/filter-car.dto';
 import { limitRecord } from '../config/app';
+import { CarAvailabilityParamDto } from './dto/car-availability-param.dto';
+import { CarAvailabilityQueryDto } from './dto/car-availability-query.dto';
 
 @Injectable()
 export class CarService {
@@ -119,5 +121,10 @@ export class CarService {
     }
 
     return this.repo.findOneBy({ id });
+  }
+
+  checkAvailability(param: CarAvailabilityParamDto, query:CarAvailabilityQueryDto) {
+    const {carId} = param;
+    const {startDate, endDate} = query;
   }
 }

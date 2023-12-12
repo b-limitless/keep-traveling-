@@ -33,7 +33,7 @@ export class CarService {
       .getRawMany();
   }
 
-  filter({
+  async filter({
     make,
     model,
     minPrice,
@@ -43,7 +43,7 @@ export class CarService {
     minMileage,
     maxMileage,
   }: FilterCarDto) {
-    const queryBuilder = this.repo.createQueryBuilder();
+    const queryBuilder = this.repo.createQueryBuilder('car');
 
     if (make) {
       queryBuilder.andWhere('car.make = :make', { make });
@@ -74,14 +74,37 @@ export class CarService {
       });
     }
 
-    return queryBuilder.limit(20).getRawMany();
+    queryBuilder
+      .leftJoinAndSelect('car.reservations', 'reservation') // Join reservations
+      .leftJoinAndSelect('reservation.user', 'user') // Join user from reservation
+      .leftJoinAndSelect('car.user', 'carUser') // Join user from car
+      .addSelect(['user.id AS userId']) // Select userId from user entity in reservation
+      .addSelect(['carUser.id AS carUserId']) // Select userId from user entity in car
+      .addSelect([
+        'car.id AS carId',
+        'car.price',
+        'car.year',
+        'car.make',
+        'car.model',
+        'car.mileage',
+        'car.createdAt',
+        'car.updatedAt',
+        'car.availableFrom',
+        'car.availableTo',
+      ]); // Select car attributes
+
+    const res = await queryBuilder.limit(20).getMany();
+
+    console.log('res', JSON.stringify(res, null, 2));
+
+    return res;
   }
 
-  findOne(id:number) {
-    if(!id) {
+  findOne(id: number) {
+    if (!id) {
       return null;
     }
 
-    return this.repo.findOneBy({id});
+    return this.repo.findOneBy({ id });
   }
 }

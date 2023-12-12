@@ -33,7 +33,7 @@ export class CarsController {
     }
 
     @Get('/filter') 
-    
+    @Serialize(CarDto)
     async filterCars(@Query() query: FilterCarDto) {
         return this.carService.filter(query)
     }

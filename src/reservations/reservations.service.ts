@@ -61,4 +61,9 @@ export class ReservationService {
   async findAll() {
     return this.repo.find({take: limitRecord});
   }
+
+  // For testing only
+  async deleteAll() {
+    return this.repo.delete({});
+  }
 }

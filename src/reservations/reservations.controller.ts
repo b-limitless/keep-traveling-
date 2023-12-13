@@ -79,5 +79,11 @@ export class ReservationsController {
     return true;
   }
 
+  // For testing only
+  @Delete('/')
+  deleteAllReservation() {
+    return this.reservationService.deleteAll();
+  }
+
 
 }

@@ -22,10 +22,9 @@ $ npm run start:dev
 
 
 ## API Documentations
-
-Can be found in http://localhost:300/api - Swagger.io
+- After starting the dev server 
+- Can be found in http://localhost:300/api - Swagger.io
 
 ## Stay in touch
-
 - Author - [Bharat Shah](bharatrose1@gmail.com)
 

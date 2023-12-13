@@ -1,6 +1,4 @@
-import { Expose, Type } from 'class-transformer';
-import { Car } from '../../cars/car.entity';
-import { CarDto } from 'src/cars/dto/car.dto';
+import { Expose } from 'class-transformer';
 export class UserDto {
   @Expose()
   id: number;

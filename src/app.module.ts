@@ -14,7 +14,6 @@ import { Reservation } from './reservations/reservation.entity';
 const cookieSession = require('cookie-session');
 
 @Module({
-  // imports: [UsersModule, CarsModule],
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,

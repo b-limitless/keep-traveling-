@@ -1,4 +1,4 @@
-import { Controller, Get, NotFoundException, Param, Post, Query, UseGuards } from '@nestjs/common';
+import { BadRequestException, Controller, Get, NotFoundException, Param, Post, Query, UseGuards } from '@nestjs/common';
 import { CreateCarDto } from './dto/create-car.dto';
 import { Body } from '@nestjs/common';
 import { AdminGuard } from '../guard/admin.guard';
@@ -53,6 +53,12 @@ export class CarsController {
     if(!carExists) {
         throw new NotFoundException('car does not exists');
     }
-    return this.carService.checkAvailability(params, query);
+    const carIsNotAvailable = await this.carService.checkAvailability(params, query);
+
+    if(carIsNotAvailable) {
+       throw new BadRequestException('car is not available'); 
+    }
+
+    return carExists; 
   }
 }

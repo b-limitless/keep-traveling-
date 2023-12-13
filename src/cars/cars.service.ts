@@ -139,7 +139,7 @@ export class CarService {
         },
       );
 
-    const response =  await queryBuilder.limit(limitRecord).getOne();
-    return response;
+    return await queryBuilder.limit(limitRecord).getOne();
+    
   }
 }

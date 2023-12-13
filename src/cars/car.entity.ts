@@ -29,12 +29,6 @@ export class Car {
   @Column()
   mileage: number;
 
-  @Column({ type: 'datetime', nullable: true })
-  availableFrom: Date;
-
-  @Column({ type: 'datetime', nullable: true })
-  availableTo: Date;
-
   @ManyToOne(() => User, (user) => user.cars, { onDelete: 'SET NULL' })
   user: User;
 

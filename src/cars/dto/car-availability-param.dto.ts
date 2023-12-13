@@ -1,7 +1,8 @@
 import { Transform } from 'class-transformer';
-import { IsDate } from 'class-validator';
+import { IsNumber } from 'class-validator';
 
 export class CarAvailabilityParamDto {
   @Transform(({ value }) => Number(value))
+  @IsNumber()
   carId: Number;
 }

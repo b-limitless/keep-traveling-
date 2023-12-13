@@ -9,6 +9,7 @@ import { FilterCarDto } from './dto/filter-car.dto';
 import { limitRecord } from '../config/app';
 import { CarAvailabilityParamDto } from './dto/car-availability-param.dto';
 import { CarAvailabilityQueryDto } from './dto/car-availability-query.dto';
+import { CarDto } from './dto/car.dto';
 
 @Injectable()
 export class CarService {
@@ -23,7 +24,7 @@ export class CarService {
   }
 
   async find() {
-    return this.repo.find({take: limitRecord});
+    return this.repo.find({ take: limitRecord });
   }
 
   search({ make, model }: SearchCarDto) {
@@ -96,7 +97,7 @@ export class CarService {
         'car.updatedAt',
         'car.availableFrom',
         'car.availableTo',
-      ]); 
+      ]);
 
     if (startDate && endDate) {
       queryBuilder.andWhere(
@@ -123,8 +124,30 @@ export class CarService {
     return this.repo.findOneBy({ id });
   }
 
-  checkAvailability(param: CarAvailabilityParamDto, query:CarAvailabilityQueryDto) {
-    const {carId} = param;
-    const {startDate, endDate} = query;
+  async checkAvailability(
+    param: CarAvailabilityParamDto,
+    query: CarAvailabilityQueryDto,
+  ) {
+    const { carId } = param;
+    const { startDate, endDate } = query;
+
+    console.log(carId, startDate, endDate)
+
+    const queryBuilder = this.repo.createQueryBuilder('car');
+    queryBuilder
+      .leftJoinAndSelect('car.reservations', 'reservation') // Join reservations
+      // .leftJoinAndSelect('car.userId')
+      .where('car.id = :carId', { carId })
+      .andWhere(
+        '(reservation.start >= :endDate OR reservation.end <= :startDate)',
+        {
+          startDate,
+          endDate,
+        },
+      );
+
+    const response =  await queryBuilder.limit(limitRecord).getOne();
+    console.log('res', JSON.stringify(response, null, 2));
+    return response;
   }
 }

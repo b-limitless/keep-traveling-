@@ -1,9 +1,9 @@
 
 
 ## Description
-Build with Nest JS 
 - Please download the repository 
 - Chage directory to the proejct
+- Node >= v16.1.0
 
 ## Installation
 
@@ -24,7 +24,7 @@ $ npm run start:dev
 
 
 
-## Documentations
+## API Documentations
 
 Can be found in http://localhost:300/api - Swagger.io
 

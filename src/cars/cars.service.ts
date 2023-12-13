@@ -131,15 +131,12 @@ export class CarService {
     const { carId } = param;
     const { startDate, endDate } = query;
 
-    console.log(carId, startDate, endDate)
-
     const queryBuilder = this.repo.createQueryBuilder('car');
     queryBuilder
       .leftJoinAndSelect('car.reservations', 'reservation') // Join reservations
-      // .leftJoinAndSelect('car.userId')
       .where('car.id = :carId', { carId })
       .andWhere(
-        '(reservation.start >= :endDate OR reservation.end <= :startDate)',
+        '(:startDate < end AND :endDate > start)',
         {
           startDate,
           endDate,
@@ -147,10 +144,6 @@ export class CarService {
       );
 
     const response =  await queryBuilder.limit(limitRecord).getOne();
-
-    // If returns null that means car is available
-    // If query return some data that means car is not available
-    console.log('res', JSON.stringify(response, null, 2));
     return response;
   }
 }

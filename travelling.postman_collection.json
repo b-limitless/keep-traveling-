@@ -1,0 +1,406 @@
+{
+	"info": {
+		"_postman_id": "b08c2dc7-9d7e-4e90-bc41-cd348a2d559e",
+		"name": "travelling",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Sign Up",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"bharatrose11@gmail.com\",\n    \"password\": \"test\", \n    \"admin\": true\n   \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/users/signup",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Current Logged User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/users/currentUser",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"currentUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Car",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"make\": \"Ford\",\n    \"model\": \"Focus\",\n    \"price\": 18000,\n    \"year\": 2020,\n    \"mileage\": 45000, \n    \"availableFrom\": \"2023-12-11T10:05:43.129Z\", \n    \"availableTo\": \"2023-12-16T10:05:43.129Z\"\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/cars",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/cars/search?make=Honda&model=jogar",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cars",
+						"search"
+					],
+					"query": [
+						{
+							"key": "make",
+							"value": "Honda"
+						},
+						{
+							"key": "model",
+							"value": "jogar"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filter cars",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/cars/filter?make=Toyota&model=Camry&minPrice=10000&maxPrice=20000&minYear=2015&maxYear=2022&minMileage=50000&maxMileage=100000\n",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cars",
+						"filter"
+					],
+					"query": [
+						{
+							"key": "make",
+							"value": "Toyota"
+						},
+						{
+							"key": "model",
+							"value": "Camry"
+						},
+						{
+							"key": "minPrice",
+							"value": "10000"
+						},
+						{
+							"key": "maxPrice",
+							"value": "20000"
+						},
+						{
+							"key": "minYear",
+							"value": "2015"
+						},
+						{
+							"key": "maxYear",
+							"value": "2022"
+						},
+						{
+							"key": "minMileage",
+							"value": "50000"
+						},
+						{
+							"key": "maxMileage",
+							"value": "100000\n"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Make Reservation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"carId\": \"2\", \n    \"start\": \"2023-12-20T08:05:43.129Z\", \n    \"end\": \"2023-12-21T10:05:43.129Z\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/reservations",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"reservations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cancel Booking",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/reservations/2",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"reservations",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filter without props",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/cars/filter",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cars",
+						"filter"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Cars",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/cars",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/users",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List reservations",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/reservations",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"reservations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Filtered cars",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/cars/filter?model=Focus&minPrice=10000&maxPrice=20000",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cars",
+						"filter"
+					],
+					"query": [
+						{
+							"key": "model",
+							"value": "Focus"
+						},
+						{
+							"key": "minPrice",
+							"value": "10000"
+						},
+						{
+							"key": "maxPrice",
+							"value": "20000"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Filtered cars - with few query string",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/cars/filter?model=Focus&minPrice=10000&maxPrice=20000&startDate=2023-12-11T09:32:19.000Z&endDate=2023-12-16T09:32:19.000Z",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cars",
+						"filter"
+					],
+					"query": [
+						{
+							"key": "model",
+							"value": "Focus"
+						},
+						{
+							"key": "minPrice",
+							"value": "10000"
+						},
+						{
+							"key": "maxPrice",
+							"value": "20000"
+						},
+						{
+							"key": "startDate",
+							"value": "2023-12-11T09:32:19.000Z"
+						},
+						{
+							"key": "endDate",
+							"value": "2023-12-16T09:32:19.000Z"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Reservations - All",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/reservations",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"reservations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check car availability",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/cars/availability/2?startDate=2023-12-18T11:05:43.129Z&endDate=2023-12-19T10:05:43.129Z",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cars",
+						"availability",
+						"2"
+					],
+					"query": [
+						{
+							"key": "startDate",
+							"value": "2023-12-18T11:05:43.129Z"
+						},
+						{
+							"key": "endDate",
+							"value": "2023-12-19T10:05:43.129Z"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

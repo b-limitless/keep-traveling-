@@ -6,6 +6,8 @@ import { CreateReservationDto } from './dto/create-reservation.dto';
 import { Car } from '../cars/car.entity';
 import { minimumReservationCancellationHours } from 'src/config/reservation';
 import { limitRecord } from '../config/app';
+import { UseGuards } from '@nestjs/common';
+import { AdminGuard } from 'src/guard/admin.guard';
 
 
 export class ReservationService {
@@ -63,7 +65,8 @@ export class ReservationService {
   }
 
   // For testing only
+  @UseGuards(AdminGuard)
   async deleteAll() {
-    return this.repo.delete({});
+    return await this.repo.delete({});
   }
 }

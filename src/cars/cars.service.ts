@@ -108,11 +108,7 @@ export class CarService {
         },
       );
     }
-
     const res = await queryBuilder.limit(limitRecord).getMany();
-
-    // console.log('res', JSON.stringify(res, null, 2));
-
     return res;
   }
 

@@ -24,7 +24,7 @@ $ npm run start:dev
 ## API Documentations
 - After starting the dev server 
 - Can be found in http://localhost:300/api - Swagger.io
-- If you would like to test the app, its uploaded to AWS EC2 instance
+- App is uploaded to AWS EC2 instance
 - http://ec2-18-153-48-207.eu-central-1.compute.amazonaws.com:3000/api
 
 ## Stay in touch

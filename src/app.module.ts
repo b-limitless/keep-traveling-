@@ -48,10 +48,12 @@ const cookieSession = require('cookie-session');
 
 
 export class AppModule {
+  constructor(private readonly configService: ConfigService) {}
   configure(consumer: MiddlewareConsumer) {
+    const appSecretKey = this.configService.get<string>('APP_SECRET_KEY');
     consumer.apply(
       cookieSession({
-        keys: ['APP_SECRET_KEY']
+        keys: [appSecretKey]
       })
     ).forRoutes('*')
   }
